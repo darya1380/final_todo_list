@@ -59,6 +59,7 @@ class AddTodo extends StatelessWidget {
                     ),
                     RaisedButton(onPressed: (){
                       todoController.todos.add(TODO(textEditingController.text, false));
+                      Get.back();
                     },
                       child: Text("add"), color: Colors.green,)
                   ], //children
