@@ -58,11 +58,7 @@ class AddTodo extends StatelessWidget {
                       },
                     ),
                     RaisedButton(onPressed: (){
-                      print("hello");
-                      print('$todoController.todos');
-                    // todoController.todos.add(TODO(textEditingController.text, false));
-                      print('new task added');
-                    Get.back();
+                      todoController.todos.add(TODO(textEditingController.text, false));
                     },
                       child: Text("add"), color: Colors.green,)
                   ], //children

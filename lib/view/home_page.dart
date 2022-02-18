@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
     TODOController controller = Get.put(TODOController());
     // bool isDark = false;
     return Scaffold(
+      
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){
@@ -25,56 +26,60 @@ class HomePage extends StatelessWidget {
           opacity: 10.0
       ),
       ),
-      body: Container(
-          padding: EdgeInsets.all(12),
-          child: Column(
-            children: [
-                Obx(() => Switch(onChanged: (bool value) {
-                  Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light: ThemeMode.dark);
-                  sx.toggle();
+      body: SingleChildScrollView(
+        child: Container(
+            padding: EdgeInsets.all(12),
+            child: Column(
+              children: [
+                  Obx(() => Switch(onChanged: (bool value) {
+                    Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light: ThemeMode.dark);
+                    sx.toggle();
 
-                }, value: sx.on.value,
-                ),
-                // child: MaterialButton(
-                //   onPressed: (){
-                //     Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light: ThemeMode.dark);
-                //   }, child: Text("switch theme"),
-                // ),
+                  }, value: sx.on.value,
+                  ),
+                  // child: MaterialButton(
+                  //   onPressed: (){
+                  //     Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light: ThemeMode.dark);
+                  //   }, child: Text("switch theme"),
+                  // ),
     // ]
 
-            ),
-              Obx(
-                  () => ListView.separated(itemBuilder: (BuildContext context, int index) {
-                    return  ListTile(
-                      title: Text(controller.todos[index].text,
-                      style: (controller.todos[index].done) ?  TextStyle(
-                        color: Colors.green
-                      ) : TextStyle(
-                        color: Colors.red
+              ),
+                Obx(
+                    () => ListView.separated(shrinkWrap: true,itemBuilder: (BuildContext context, int index) {
+                      return  ListTile(
+
+                        title: Text(controller.todos[index].text,
+                        style: (controller.todos[index].done) ?  TextStyle(
+                          color: Colors.green
+                        ) : TextStyle(
+                          color: Colors.red
+                        ),
+
+
+                      ), onTap: (){
+                          Get.to(AddTodo());//todo
+                      },trailing: Checkbox(
+                        value: controller.todos[index].done,
+                        onChanged: (v){
+                          var changed = controller.todos[index];
+                          changed.done = v;
+                          controller.todos[index] = changed;
+                          },
                       ),
+                      );
+                    }, itemCount: controller.todos.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
 
-                    ), onTap: (){
-                        //todo
-                    },trailing: Checkbox(
-                      value: controller.todos[index].done,
-                      onChanged: (v){
-                        var changed = controller.todos[index];
-                        changed.done = v;
-                        controller.todos[index] = changed;
-                        },
-                    ),
-                    );
-                  }, itemCount: controller.todos.length,
-                    separatorBuilder: (BuildContext context, int index) {
-                    return const Divider();
-                  },
+                    )
+                )
 
-                  )
-              )
-
-            ]
+              ]
+            ),
           ),
-        ),
+      ),
 
     );
   }
