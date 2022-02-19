@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
     TODOController controller = Get.put(TODOController());
     // bool isDark = false;
     return Scaffold(
-      
+
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: (){
@@ -23,8 +23,14 @@ class HomePage extends StatelessWidget {
           actionsIconTheme: IconThemeData(
           size: 30.0,
           color: Colors.black,
-          opacity: 10.0
+          opacity: 10.0,
       ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => SearchPage())),
+              icon: Icon(Icons.search))
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -80,6 +86,39 @@ class HomePage extends StatelessWidget {
           ),
       ),
 
+    );
+  }
+}
+class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // The search area here
+          title: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: TextField(
+                style: TextStyle(color: Colors.blue),
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        //todo
+                        //show all todos
+                      },
+                    ),
+                    hintText: 'Search...',
+                    border: InputBorder.none),
+              ),
+            ),
+          )),
     );
   }
 }
