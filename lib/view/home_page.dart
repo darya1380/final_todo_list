@@ -12,15 +12,14 @@ class HomePage extends StatelessWidget {
     TODOController controller = Get.put(TODOController());
     // bool isDark = false;
     return Scaffold(
-
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: (){
           Get.to(AddTodo());
         },
       ),
-      appBar: AppBar(title: Text("TODO APP"),
-          actionsIconTheme: IconThemeData(
+      appBar: AppBar(title: const Text("TODO APP"),
+          actionsIconTheme: const IconThemeData(
           size: 30.0,
           color: Colors.black,
           opacity: 10.0,
@@ -28,13 +27,13 @@ class HomePage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
               onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => SearchPage())),
-              icon: Icon(Icons.search))
+                  .push(MaterialPageRoute(builder: (_) => const SearchPage())),
+              icon: const Icon(Icons.search))
         ],
       ),
       body: SingleChildScrollView(
         child: Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: Column(
               children: [
                   Obx(() => Switch(onChanged: (bool value) {
@@ -56,9 +55,9 @@ class HomePage extends StatelessWidget {
                       return  ListTile(
 
                         title: Text(controller.todos[index].text,
-                        style: (controller.todos[index].done) ?  TextStyle(
+                        style: (controller.todos[index].done) ?  const TextStyle(
                           color: Colors.green
-                        ) : TextStyle(
+                        ) : const TextStyle(
                           color: Colors.red
                         ),
 
@@ -104,11 +103,11 @@ class SearchPage extends StatelessWidget {
                 color: Colors.white, borderRadius: BorderRadius.circular(5)),
             child: Center(
               child: TextField(
-                style: TextStyle(color: Colors.blue),
+                style: const TextStyle(color: Colors.blue),
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: const Icon(Icons.clear),
                       onPressed: () {
                         //todo
                         //show all todos
