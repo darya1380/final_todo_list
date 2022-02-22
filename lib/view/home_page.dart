@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
               onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => const SearchPage())),
+                  .push(MaterialPageRoute(builder: (_) =>  SearchPage())),
               icon: const Icon(Icons.search))
         ],
       ),
@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
 
 
                       ), onTap: (){
-                          Get.to(AddTodo());//todo
+                          Get.to(AddTodo());
                       },trailing: Checkbox(
                         value: controller.todos[index].done,
                         onChanged: (v){
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
                     )
                 ),
               ]
-            ),
+              ),
           ),
       ),
 
@@ -89,8 +89,9 @@ class HomePage extends StatelessWidget {
   }
 }
 class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
+  SearchPage({Key? key}) : super(key: key);
+  TODOController controller = Get.put(TODOController());
+  final myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,21 +102,51 @@ class SearchPage extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: Center(
-              child: TextField(
+            child: Column(
+              children: [ TextField(
                 style: const TextStyle(color: Colors.blue),
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
-                        //todo
+                        controller.searchForTODo(myController.text);
                         //show all todos
                       },
                     ),
                     hintText: 'Search...',
                     border: InputBorder.none),
               ),
+              Obx(
+                      () => ListView.separated(shrinkWrap: true,itemBuilder: (BuildContext context, int index) {
+                    return  ListTile(
+
+                      title: Text(controller.todos[index].text,
+                        style: (controller.todos[index].done) ?  const TextStyle(
+                            color: Colors.green
+                        ) : const TextStyle(
+                            color: Colors.red
+                        ),
+
+
+                      ), onTap: (){
+                      Get.to(AddTodo());
+                    },trailing: Checkbox(
+                      value: controller.todos[index].done,
+                      onChanged: (v){
+                        var changed = controller.todos[index];
+                        changed.done = v;
+                        controller.todos[index] = changed;
+                      },
+                    ),
+                    );
+                  }, itemCount: controller.todos.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider();
+                    },
+
+                  )
+              ),]
             ),
           )),
     );
